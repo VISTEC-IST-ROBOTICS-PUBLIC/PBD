@@ -1,0 +1,7 @@
+empy
+catkin_pkg
+open3d
+scipy
+pyquaternion
+pyqtgraph
+matplotlib

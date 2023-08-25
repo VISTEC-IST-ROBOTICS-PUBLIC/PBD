@@ -1,0 +1,5 @@
+std_msgs/UInt16MultiArray ids
+geometry_msgs/PoseArray local_pose
+---
+std_msgs/UInt16MultiArray ids
+geometry_msgs/PoseArray center_pose

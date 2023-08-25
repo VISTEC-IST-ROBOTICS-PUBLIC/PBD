@@ -1,0 +1,13 @@
+opencv-contrib-python==4.5.5.64
+opencv-python==4.5.5.64
+mediapipe
+PyQt6
+pyqtgraph
+pyopengl
+open3d
+
+# sudo add-apt-repository ppa:okirby/qt6-backports
+# sudo apt update
+# sudo apt install qt6-base-dev
+
+# sudo apt-get install --reinstall libxcb-xinerama0

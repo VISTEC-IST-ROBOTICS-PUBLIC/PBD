@@ -1,0 +1,42 @@
+types:
+    idls:
+        - >
+            struct MoveRobotToNextPose_Request
+            {
+                
+            };
+
+            struct MoveRobotToNextPose_Response
+            {
+                
+            };
+systems:
+    ros1: { type: ros1 }
+    ros2: { type: ros2 }
+
+routes:
+    ros1_to_ros2: { from: ros1, to: ros2 }
+    ros1_server:
+        server: ros1
+        clients: [ros2]
+
+topics:
+    tcp_pose: { type: "geometry_msgs/Pose", route: ros1_to_ros2 }
+    robot_moving: { type: "geometry_msgs/Pose", route: ros1_to_ros2 }
+
+services:
+    move_robot: {
+        request_type: MoveRobotToNextPose_Request,
+        reply_type: MoveRobotToNextPose_Response,
+        route: ros1_server,
+        remap: {
+            ros1: {
+                request_type: "dual_arm_driver/MoveRobotToNextPose:request",
+                reply_type: "dual_arm_driver/MoveRobotToNextPose:response"
+            },
+            ros2: {
+                request_type: "vlib_msgs/MoveRobotToNextPose:request",
+                reply_type: "vlib_msgs/MoveRobotToNextPose:response"
+            }
+        }
+    }

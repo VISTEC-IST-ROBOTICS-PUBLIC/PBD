@@ -1,0 +1,4 @@
+std_msgs/UInt8 command
+geometry_msgs/Pose target_pose
+---
+std_msgs/UInt8 error

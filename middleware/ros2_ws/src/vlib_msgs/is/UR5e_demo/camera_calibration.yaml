@@ -1,0 +1,48 @@
+types:
+    idls:
+        - >
+            #include "geometry_msgs/Pose.idl"
+            #include "std_msgs/UInt8.idl"
+            struct MoveRobotToNextPose_Request
+            {
+            	UInt8 command;
+            	Pose terget_pose;
+            };
+            
+            struct MoveRobotToNextPose_Response
+            {
+            	UInt8 error;
+            };
+            
+systems:
+    ros1: { type: ros1 }
+    ros2: { type: ros2 }
+
+routes:
+    ros1_to_ros2: { from: ros1, to: ros2 }
+    ros2_to_ros1: { from: ros2, to: ros1 }
+    ros1_server:
+        server: ros1
+        clients: [ros2]
+
+topics:
+    tcp_pose: { type: "geometry_msgs/PoseStamped", route: ros1_to_ros2 }
+    robot_moving: { type: "std_msgs/UInt8", route: ros1_to_ros2 }
+    obstacle_position: { type: "geometry_msgs/Vector3Stamped", route: ros2_to_ros1 }
+
+services:
+    move_robot: {
+        request_type: MoveRobotToNextPose_Request,
+        reply_type: MoveRobotToNextPose_Response,
+        route: ros1_server,
+        remap: {
+            ros1: {
+                request_type: "dual_arm_msgs/MoveRobotToNextPose:request",
+                reply_type: "dual_arm_msgs/MoveRobotToNextPose:response"
+            },
+            ros2: {
+                request_type: "vlib_msgs/MoveRobotToNextPose:request",
+                reply_type: "vlib_msgs/MoveRobotToNextPose:response"
+            }
+        }
+    }

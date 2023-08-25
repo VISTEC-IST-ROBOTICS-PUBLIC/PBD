@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>vlib_core</name>
+  <version>1.0.0</version>
+  <description>vlib core algorithm package</description>
+  <maintainer email="Teeramethr_pro@vistec.ac.th">BRAIN Lab Industrial Team</maintainer>
+  <license>Apache License 2.0</license>
+  
+  <url type="website">https://brain.vistec.ac.th/</url>
+  <url type="bugtracker">https://github.com/orgs/VISTEC-IST-ROBOTICS</url>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>vlib_msgs</build_depend>
+
+  <depend>cv_bridge</depend>
+  <depend>image_transport</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
+  <depend>librealsense2</depend>
+  <depend>realsense2_camera</depend>
+  <depend>realsense2_camera_msgs</depend>
+  <depend>realsense2_description</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>diagnostic_updater</depend>
+  
+  <exec_depend>launch_ros</exec_depend>
+  <build_depend>ros_environment</build_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
