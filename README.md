@@ -41,7 +41,7 @@ After installation we need to proceed **Robot** &harr; **Camera** frame calibrat
 
 #### On **PC-A** run:
 ```sh
-cd ~/dual_arm_driver/script/
+cd ~/dual_arm_driver/scripts/
 python camera_frame_calibrate.py
 ```
 #### On **PC-B** run:
@@ -104,7 +104,7 @@ python hand_realsense_3D.py
 ## 3) Obstacle Avoidance
 #### On **PC-A** run:
 ```sh
-cd ~/dual_arm_driver/script
+cd ~/dual_arm_driver/scripts/
 python A_dmp_hand.py
 ```
 #### On **PC-B** run:
