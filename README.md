@@ -112,3 +112,22 @@ Detect pre-defined obstacle and publish it's 3D position
 ```sh
 ros2 run vlib_core cup_detector.py  # 3D object detector (cup)
 ```
+## 4) ADAP-DMPs
+#### On **PC-A** run:
+Launch Robot bringup and run interface file
+```sh
+roslaunch dual_arm_driver dual_arm_bringup.launch
+rosrun dual_arm_driver mux_joint_node.py
+rosrun dual_arm_driver RobotVelocityInterface.py
+```
+Launch conveyor bringup and run file to command speed
+```sh
+roslaunch ros_conveyor conveyor_bringup.launch
+cd ~/dual_arm_driver/scripts/
+python conveyor_test.py
+```
+Run this node to use ADAP-DMPs
+```sh
+cd ~/dual_arm_driver/scripts/
+python A_dmp_hand.py
+```
