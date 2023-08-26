@@ -103,7 +103,8 @@ python hand_realsense_3D.py
 ## 3) Obstacle Avoidance
 #### On **PC-A** run:
 ```sh
-
+cd ~/dual_arm_driver/script
+python A_dmp_hand.py
 ```
 #### On **PC-B** run:
 Detect pre-defined obstacle and publish it's 3D position
