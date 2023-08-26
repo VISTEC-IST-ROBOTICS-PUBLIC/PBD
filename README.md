@@ -41,7 +41,8 @@ After installation we need to proceed **Robot** &harr; **Camera** frame calibrat
 
 #### On **PC-A** run:
 ```sh
-
+cd ~/dual_arm_driver/script/
+python camera_frame_calibrate.py
 ```
 #### On **PC-B** run:
 ##### [Launch Integration Service](#launch-integration-service)
