@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>ros_conveyor</name>
+    <version>0.1.0</version>
+    <description>The ros_conveyor package for control PLC S7-1200 Siemens and Panasonic servo drive</description>
+
+    <maintainer email="wuttipat.cho@anman.co.th">sweilz</maintainer>
+    <license>BSD</license>
+    <url type="repository">https://github.com/AnmanTechnology/ROS-Conveyor</url>
+
+    <author email="wuttipat.cho@anman.co.th">sweilz</author>
+
+    <build_depend>message_generation</build_depend>
+    <build_export_depend>message_generation</build_export_depend>
+    <exec_depend>message_runtime</exec_depend>
+    <buildtool_depend>catkin</buildtool_depend>
+    <depend>rospy</depend>
+
+</package>

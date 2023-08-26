@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur">
+
+   <!-- import main macro -->
+   <xacro:arg name="fixed_frame" default="base_link"/>
+   <xacro:arg name="tf_prefix_A" default="ur_A_"/>
+   <xacro:arg name="tf_prefix_B" default="ur_B_"/>
+
+   <!-- import main macro -->
+   <xacro:include filename="$(find dual_arm_driver)/urdf/inc/ur_macro.xacro"/>
+
+   <!-- parameters -->
+   <xacro:arg name="joint_limit_params_A" default="$(find dual_arm_driver)/config/ur_A/joint_limits_A.yaml"/>
+   <xacro:arg name="kinematics_params_A" default="$(find dual_arm_driver)/config/ur_A/kinematic_A.yaml"/>
+   <xacro:arg name="joint_limit_params_B" default="$(find dual_arm_driver)/config/ur_B/joint_limits_B.yaml"/>
+   <xacro:arg name="kinematics_params_B" default="$(find dual_arm_driver)/config/ur_B/kinematic_B.yaml"/>
+   <xacro:arg name="physical_params" default="$(find ur_description)/config/ur5e/physical_parameters.yaml"/>
+   <xacro:arg name="visual_params" default="$(find ur_description)/config/ur5e/visual_parameters.yaml"/>
+   <!-- legal values:
+         - hardware_interface/PositionJointInterface
+         - hardware_interface/VelocityJointInterface
+         - hardware_interface/EffortJointInterface
+   -->
+   <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+   <xacro:arg name="safety_limits" default="false"/>
+   <xacro:arg name="safety_pos_margin" default="0.15"/>
+   <xacro:arg name="safety_k_position" default="20"/>
+
+   <!-- arm -->
+   <link name="$(arg fixed_frame)"/>
+
+   <!-- joints: main serial chain -->
+   <joint name="$(arg fixed_frame)-base_link_inertia_A" type="fixed">
+     <parent link="$(arg fixed_frame)" />
+     <child link="$(arg tf_prefix_A)base_link_inertia" />
+     <origin xyz="0 0.23 1.45" rpy="-2.35619449019 0 0" />
+   </joint>
+   <joint name="$(arg fixed_frame)-base_link_inertia_B" type="fixed">
+     <parent link="$(arg fixed_frame)" />
+     <child link="$(arg tf_prefix_B)base_link_inertia" />
+     <origin xyz="0 -0.23 1.45" rpy="0.785398 3.14159 0" />
+   </joint>
+
+   <!-- ROS-Industrial 'base' frame: base_link to UR 'Base' Coordinates transform -->
+   <link name="$(arg tf_prefix_A)base"/>
+   <joint name="$(arg fixed_frame)-base_fixed_joint_A" type="fixed">
+     <origin xyz="0 0.23 1.45" rpy="-2.35619449019 0 0"/>
+     <parent link="$(arg fixed_frame)"/>
+     <child link="$(arg tf_prefix_A)base"/>
+   </joint>
+   <link name="$(arg tf_prefix_B)base"/>
+   <joint name="$(arg fixed_frame)-base_fixed_joint_B" type="fixed">
+     <origin xyz="0 -0.23 1.45" rpy="0.785398 3.14159 0"/>
+     <parent link="$(arg fixed_frame)"/>
+     <child link="$(arg tf_prefix_B)base"/>
+   </joint>
+
+   <xacro:ur_robot
+     prefix="$(arg tf_prefix_A)"
+     joint_limits_parameters_file="$(arg joint_limit_params_A)"
+     kinematics_parameters_file="$(arg kinematics_params_A)"
+     physical_parameters_file="$(arg physical_params)"
+     visual_parameters_file="$(arg visual_params)"
+     transmission_hw_interface="$(arg transmission_hw_interface)"
+     safety_limits="$(arg safety_limits)"
+     safety_pos_margin="$(arg safety_pos_margin)"
+     safety_k_position="$(arg safety_k_position)"/>
+
+  <xacro:ur_robot
+     prefix="$(arg tf_prefix_B)"
+     joint_limits_parameters_file="$(arg joint_limit_params_B)"
+     kinematics_parameters_file="$(arg kinematics_params_B)"
+     physical_parameters_file="$(arg physical_params)"
+     visual_parameters_file="$(arg visual_params)"
+     transmission_hw_interface="$(arg transmission_hw_interface)"
+     safety_limits="$(arg safety_limits)"
+     safety_pos_margin="$(arg safety_pos_margin)"
+     safety_k_position="$(arg safety_k_position)"/>
+</robot>

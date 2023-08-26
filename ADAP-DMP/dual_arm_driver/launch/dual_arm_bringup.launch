@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<launch>
+    <!--remap from="/ur_A_/joint_states" to="/joint_states"/>
+    <remap from="/ur_B_/joint_states" to="/joint_states"/-->
+
+    <include file="$(find dual_arm_driver)/launch/load_dual_arm.launch">
+        <arg name="fixed_frame" value="base_link"/>
+        <arg name="tf_prefix_A" value="ur_A_"/>
+        <arg name="tf_prefix_B" value="ur_B_"/>
+        <arg name="kinematics_params_A" value="$(find dual_arm_driver)/config/ur_A/kinematic_A.yaml"/>
+        <arg name="kinematics_params_B" value="$(find dual_arm_driver)/config/ur_B/kinematic_B.yaml"/>
+    </include>
+
+    <group ns="ur_A_">
+        <include file="$(find dual_arm_driver)/launch/ur5e_bringup.launch">
+            <arg name="tf_prefix" value="ur_A_"/>
+            <arg name="controller_config_file" value="$(find dual_arm_driver)/config/ur_A/ur5e_A_controller.yaml"/>
+            <arg name="robot_ip" value="192.168.1.31"/>
+            <arg name="reverse_port" value="50001"/>
+            <arg name="script_sender_port" value="50002"/>
+            <arg name="trajectory_port" value="50003"/>
+            <arg name="kinematics_config" value="$(find dual_arm_driver)/config/ur_A/kinematic_A.yaml"/>
+            <arg name="stopped_controllers" value="joint_group_vel_controller twist_controller"/>
+        </include>
+    </group>
+
+
+    <group ns="ur_B_">
+      <include file="$(find dual_arm_driver)/launch/ur5e_bringup.launch">
+        <arg name="tf_prefix" value="ur_B_"/>
+        <arg name="controller_config_file" value="$(find dual_arm_driver)/config/ur_B/ur5e_B_controller.yaml"/>
+        <arg name="robot_ip" value="192.168.1.32"/>
+        <arg name="reverse_port" value="50004"/>
+        <arg name="script_sender_port" value="50005"/>
+        <arg name="trajectory_port" value="50006"/>
+        <arg name="kinematics_config" value="$(find dual_arm_driver)/config/ur_B/kinematic_B.yaml"/>
+        <arg name="stopped_controllers" value="joint_group_vel_controller twist_controller"/>
+      </include>
+    </group>
+
+    <node name="servo_server" pkg="moveit_servo" type="servo_server" output="screen" >
+        <param name="parameter_ns" type="string" value="optional_parameter_namespace" />
+        <rosparam ns="optional_parameter_namespace" command="load" file="$(find moveit_servo)/config/ur_simulated_config.yaml" />
+    </node>
+
+    <include file="$(find dual_arm_moveit_config)/launch/move_group.launch"/>
+
+</launch>

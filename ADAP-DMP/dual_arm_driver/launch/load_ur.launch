@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- VISTEC -->
+  <arg name="fixed_frame" default="base_link"/>
+  <arg name="tf_prefix_A" default="ur_A_"/>
+  <arg name="tf_prefix_B" default="ur_B_"/>
+
+  <!--ur parameters files -->
+  <arg name="joint_limit_params_A" doc="YAML file containing the joint limit values"/>
+  <arg name="kinematics_params_A" doc="YAML file containing the robot's kinematic parameters. These will be different for each robot as they contain the robot's calibration."/>
+  <arg name="joint_limit_params_B" doc="YAML file containing the joint limit values"/>
+  <arg name="kinematics_params_B" doc="YAML file containing the robot's kinematic parameters. These will be different for each robot as they contain the robot's calibration."/>
+
+  <arg name="physical_params" doc="YAML file containing the phycical parameters of the robots"/>
+  <arg name="visual_params" doc="YAML file containing the visual model of the robots"/>
+  <!--common parameters  -->
+  <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
+  <arg name="safety_limits" default="false" doc="If True, enable the safety limits controller"/>
+  <arg name="safety_pos_margin" default="0.15" doc="The lower/upper limits in the safety controller" />
+  <arg name="safety_k_position" default="20" doc="Used to set k position in the safety controller" />
+
+  <!-- Load the top-level (ie: stand-alone and complete) xacro for the UR
+       variant defined by the set of yaml parameter files (so to load a UR5
+       onto the ROS parameter server, provide paths to the .yaml files which
+       contain the limits, kinematics, physical and visual parameters which
+       together describe a UR5 robot.
+
+       NOTE: users will typically want to use use one of the other .launch files
+       in this directory (ie: 'load_urXXX.launch'), as those already contain
+       appropriate default values for the required arguments for the various
+       supported robots.
+
+       NOTE2: if you have a custom robot configuration, or your robot is
+       integrated into a work cell, do NOT change this file or add all of the
+       work cell objects to the ur.xacro file. Create a new top-level xacro and
+       include the ur_macro.xacro file into it. Then write a new .launch file
+       to load it onto the parameter server.
+  -->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find dual_arm_driver)/urdf/ur.xacro'
+    fixed_frame:=$(arg fixed_frame)
+    tf_prefix_A:=$(arg tf_prefix_A)
+    tf_prefix_B:=$(arg tf_prefix_B)
+    joint_limit_params_A:=$(arg joint_limit_params_A)
+    kinematics_params_A:=$(arg kinematics_params_A)
+    joint_limit_params_B:=$(arg joint_limit_params_B)
+    kinematics_params_B:=$(arg kinematics_params_B)
+    physical_params:=$(arg physical_params)
+    visual_params:=$(arg visual_params)
+    transmission_hw_interface:=$(arg transmission_hw_interface)
+    safety_limits:=$(arg safety_limits)
+    safety_pos_margin:=$(arg safety_pos_margin)
+    safety_k_position:=$(arg safety_k_position)"
+    />
+</launch>

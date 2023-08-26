@@ -1,0 +1,8 @@
+<launch>
+
+    <!--<include file="$(find ros_ur5e)/launch/ur5e_bringup.launch" output="screen"/>-->
+    <!--<include file="$(find ros_conveyor)/launch/conveyor_bringup.launch" output="screen"/>-->
+    <include file="$(find realsense2_camera)/launch/rs_rgbd.launch" />
+    <include file="$(find apriltag_ros)/launch/continuous_detection.launch" />
+
+</launch>

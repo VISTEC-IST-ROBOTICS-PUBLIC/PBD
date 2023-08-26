@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- VISTEC -->
+  <arg name="fixed_frame" default="base_link"/>
+  <arg name="tf_prefix_A" default="ur_A_"/>
+  <arg name="tf_prefix_B" default="ur_B_"/>
+
+  <!--ur5e parameters files -->
+  <arg name="joint_limit_params_A" default="$(find dual_arm_driver)/config/ur_A/joint_limits_A.yaml"/>
+  <arg name="kinematics_params_A" default="$(find dual_arm_driver)/config/ur_A/kinematic_A.yaml"/>
+  <arg name="joint_limit_params_B" default="$(find dual_arm_driver)/config/ur_B/joint_limits_B.yaml"/>
+  <arg name="kinematics_params_B" default="$(find dual_arm_driver)/config/ur_B/kinematic_B.yaml"/>
+
+
+  <arg name="physical_params" default="$(find ur_description)/config/ur5e/physical_parameters.yaml"/>
+  <arg name="visual_params" default="$(find ur_description)/config/ur5e/visual_parameters.yaml"/>
+
+  <!--common parameters -->
+  <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
+  <arg name="safety_limits" default="false" doc="If True, enable the safety limits controller"/>
+  <arg name="safety_pos_margin" default="0.15" doc="The lower/upper limits in the safety controller" />
+  <arg name="safety_k_position" default="20" doc="Used to set k position in the safety controller" />
+
+  <!-- use common launch file and pass all arguments to it -->
+  <include file="$(find dual_arm_driver)/launch/load_ur.launch" pass_all_args="true"/>
+  
+</launch>

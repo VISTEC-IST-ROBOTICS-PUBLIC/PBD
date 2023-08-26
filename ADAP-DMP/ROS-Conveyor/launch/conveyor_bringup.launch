@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <node name="conveyor_node" pkg="ros_conveyor" type="conveyor_client.py" output="screen">
+        <param name="host" value="192.168.1.21"/>
+        <param name="ratio_cmd_A" value="1.0"/>
+        <param name="ratio_vel_A" value="1.2593"/>
+        <param name="ratio_cmd_B" value="1.0"/>
+        <param name="ratio_vel_B" value="1.0"/>
+        <param name="min_vel" value="-0.2"/>
+        <param name="max_vel" value="0.2"/>
+    </node>
+</launch>
