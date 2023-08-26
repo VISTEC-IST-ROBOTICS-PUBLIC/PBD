@@ -66,28 +66,28 @@ This node will order the robot arm to move to random poses for 25 times (configu
 # New session
 ros2 run vlib camera_frame_calibration.py
 ```
-During calibration, this node will gather both $\text{H}^{base}_{tcp}$ (from Robot's forward kinematic) and $\text{H}^{cam}_{cube}$ (from Aruco Cube 3D-pose estimation). After calibration process, this node will save the results as NumPy zipped archive at **~/dev_ws/poses.npz** which contain multiple set of *timestamp*, $\text{H}^{base}_{tcp}$, and $\text{H}^{cam}_{cube}$.
+During calibration, this node will gather both $`\text{H}^{base}_{tcp}`$ (from Robot's forward kinematic) and $`\text{H}^{cam}_{cube}`$ (from Aruco Cube 3D-pose estimation). After calibration process, this node will save the results as NumPy zipped archive at **~/dev_ws/poses.npz** which contain multiple set of *timestamp*, $`\text{H}^{base}_{tcp}`$, and $`\text{H}^{cam}_{cube}`$.
 
 
 ##### Post-process the calibration data
 We already know $\text{H}^{tcp}_{cube}$ from its [CAD](dev_ws/src/vlib/vlib_description/meshes/Calibration_CUBE_UR_50mm%20v3.stl) which is:
-$$
+```math
 \text{H}^{tcp}_{cube}=\begin{bmatrix}
 1 & 0 & 0 & 0 \\
 0 & 1 & 0 & 0.0175 \\
 0 & 0 & 1 & 0 \\
-0 & 0 & 0 & 1 \\
+0 & 0 & 0 & 1
 \end{bmatrix}
-$$
+```
 <img src="docs/images/Aruco_calibration_cube.gif" width="300" />
 
-For each pair of $\text{H}^{base}_{tcp}$ and $\text{H}^{cam}_{cube}$ from [calibration node](#run-calibration-node), we can calculate transformation of camera frame related to robot base frame ($\text{H}^{base}_{cam}$) from:
+For each pair of $`\text{H}^{base}_{tcp}`$ and $`\text{H}^{cam}_{cube}`$ from [calibration node](#run-calibration-node), we can calculate transformation of camera frame related to robot base frame ($`\text{H}^{base}_{cam}`$) from:
 
-$$
+```math
 \text{H}^{base}_{cam}=\text{H}^{base}_{tcp} \text{H}^{tcp}_{cube} (\text{H}^{cam}_{cube})^{-1}
-$$
+```
 
-We use a script [calibration_postprocess.py](dev_ws/src/vlib/vlib_core/scripts/calibration_postprocess.py) to do this process and calculate mean of $\text{H}^{base}_{cam}$ from multiple pairs of $\text{H}^{base}_{tcp}$ and $\text{H}^{cam}_{cube}$ above. Result will be like this:
+We use a script [calibration_postprocess.py](dev_ws/src/vlib/vlib_core/scripts/calibration_postprocess.py) to do this process and calculate mean of $\text{H}^{base}_{cam}$ from multiple pairs of $`\text{H}^{base}_{tcp}$ and $\text{H}^{cam}_{cube}`$ above. Result will be like this:
 
 <img src="docs/images/calibration_result.png" width="300" />
 
